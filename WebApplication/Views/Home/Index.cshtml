@@ -1,0 +1,35 @@
+﻿@model IndexViewModel;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Сложение двух чисел</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<form form action="/Home/Index" method="post">
+    <div class="form-group">
+        <label for="exampleInputEmail1">Number 1</label>
+        <input type="text" name="Number1" class="form-control" value="@Model.Input.Number1" id="exampleInputEmail1">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Number 2</label>
+        <input type="text" name="Number2" class="form-control" value="@Model.Input.Number2" id="exampleInputPassword1">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Number 3</label>
+        <input type="text" name="Number3" class="form-control" value="@Model.Input.Number3" id="exampleInputPassword1">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Number 4</label>
+        <input type="text" name="Number4" class="form-control" value="@Model.Input.Number4" id="exampleInputPassword1">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Number 5</label>
+        <input type="text" name="Number5" class="form-control" value="@Model.Input.Number5" id="exampleInputPassword1">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<p>@Model.Result</p>

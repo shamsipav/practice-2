@@ -1,0 +1,43 @@
+﻿@model IndexViewModel;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Сложение двух чисел</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<h2>Исходные данные</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <td>Параметр</td>
+            <td>Значение</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Число 1</td>
+            <td>@Model.Input.Number1</td>
+        </tr>
+        <tr>
+            <td>Число 2</td>
+            <td>@Model.Input.Number2</td>
+        </tr>
+        <tr>
+            <td>Число 3</td>
+            <td>@Model.Input.Number3</td>
+        </tr>
+        <tr>
+            <td>Число 4</td>
+            <td>@Model.Input.Number4</td>
+        </tr>
+        <tr>
+            <td>Число 5</td>
+            <td>@Model.Input.Number5</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>@Model.Result</p>
