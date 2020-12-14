@@ -11,7 +11,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\fonts\" />
-    <Folder Include="Новая папка1\" />
   </ItemGroup>
 
 </Project>

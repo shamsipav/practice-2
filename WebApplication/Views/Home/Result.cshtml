@@ -88,10 +88,7 @@
                 coordinates.push(parseFloat(coordinate.textContent.replace(/[,]+/g, '.')));
                 materialTemperatures.push(parseFloat(materialTemperature.textContent.replace(/[,]+/g, '.')));
                 gasTemperatures.push(parseFloat(gasTemperature.textContent.replace(/[,]+/g, '.')));
-                //console.log(gasTemperatures);
             }
-
-            //console.log(materialTemperatures);
 
             var ctx = document.getElementById('myChart').getContext('2d');
             var myChart = new Chart(ctx, {
@@ -112,12 +109,6 @@
                     }],
                 },
                 options: {
-                    //title: {
-                    //    display: true,
-                    //    text: 'Изменение температур материала и газа по высоте слоя',
-                    //    fontFamily: "Montserrat-ExtraBold",
-                    //    fontColor: "black"
-                    //},
                     scales: {
                         yAxes: [{
                             ticks: {
@@ -155,8 +146,6 @@
             for (var i = 1; i < trs.length; i++) {
                 temperatureDifference = trs[i].getElementsByTagName("p")[3];
                 temperatureDifferences.push(parseFloat(temperatureDifference.textContent.replace(/[,]+/g, '.')));
-
-                console.log(temperatureDifferences);
             }
 
             var ctx = document.getElementById('myChart2').getContext('2d');
@@ -172,12 +161,6 @@
                     }],
                 },
                 options: {
-                    //title: {
-                    //    display: true,
-                    //    text: 'Изменение температур материала и газа по высоте слоя',
-                    //    fontFamily: "Montserrat-ExtraBold",
-                    //    fontColor: "black"
-                    //},
                     scales: {
                         yAxes: [{
                             ticks: {
