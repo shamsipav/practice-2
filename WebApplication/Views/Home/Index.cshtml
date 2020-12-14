@@ -3,33 +3,55 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Сложение двух чисел</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="main-content">
+    <h2>Исходные данные</h2>
+    <form action="/Home/Index" method="post">
+        <table id="table" class="table table-bordered table-responsive">
+            <thead>
+                <tr>
+                    <th>Высота слоя, м</th>
+                    <th>Начальная температура материала, *C</th>
+                    <th>Начальная температура газа, *С</th>
+                    <th>Скорость газа на свободное сечение шахты, м/с</th>
+                    <th>Средняя теплоемкость газа, кДж/(м3 • К)</th>
+                    <th>Расход материалов, кг/с</th>
+                    <th>Теплоемкость материалов, кДж/(кг • К)</th>
+                    <th>Объемный коэффициент теплоотдачи, Вт/(м3 • К)</th>
+                    <th>Диаметр аппарата, м</th>
+                </tr>
+            </thead>
+
+            <tr>
+                <td>
+                    <input type="text" name="LayerHeight" value="@Model.Input.LayerHeight" class="form-control layer-height" id="layer-height">
+                </td>
+                <td>
+                    <input type="text" name="MaterialStartTemperature" value="@Model.Input.MaterialStartTemperature" class="form-control material-start-temperature" id="material-start-temperature">
+                </td>
+                <td>
+                    <input type="text" name="GasStartTemperature" value="@Model.Input.GasStartTemperature" class="form-control gas-start-temperature" id="gas-start-temperature">
+                </td>
+                <td>
+                    <input type="text" name="GasSpeedFreeCrossSection" value="@Model.Input.GasSpeedFreeCrossSection" class="form-control gas-speed-free-cross-section" id="gas-speed-free-cross-section">
+                </td>
+                <td>
+                    <input type="text" name="GasAverageHeatСapacity" value="@Model.Input.GasAverageHeatСapacity" class="form-control gas-average-heat-capacity" id="gas-average-heat-capacity">
+                </td>
+                <td>
+                    <input type="text" name="MaterialConsumption" value="@Model.Input.MaterialConsumption" class="form-control material-consumption" id="material-consumption">
+                </td>
+                <td>
+                    <input type="text" name="MaterialHeatCapacity" value="@Model.Input.MaterialHeatCapacity" class="form-control material-heat-capacity" id="material-heat-capacity">
+                </td>
+                <td>
+                    <input type="text" name="VolumeHeatTransferCoefficient" value="@Model.Input.VolumeHeatTransferCoefficient" class="form-control volume-heat-transfer-coefficient" id="volume-heat-transfer-coefficient">
+                </td>
+                <td>
+                    <input type="text" name="DeviceDiameter" value="@Model.Input.DeviceDiameter" class="form-control device-diameter" id="device-diameter">
+                </td>
+            </tr>
+            
+        </table>
+        <button type="submit" id="Calculate" name="buttonType" class="btn btn-primary">Рассчитать</button>
+    </form>
 </div>
-
-<form form action="/Home/Index" method="post">
-    <div class="form-group">
-        <label for="exampleInputEmail1">Number 1</label>
-        <input type="text" name="Number1" class="form-control" value="@Model.Input.Number1" id="exampleInputEmail1">
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Number 2</label>
-        <input type="text" name="Number2" class="form-control" value="@Model.Input.Number2" id="exampleInputPassword1">
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Number 3</label>
-        <input type="text" name="Number3" class="form-control" value="@Model.Input.Number3" id="exampleInputPassword1">
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Number 4</label>
-        <input type="text" name="Number4" class="form-control" value="@Model.Input.Number4" id="exampleInputPassword1">
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Number 5</label>
-        <input type="text" name="Number5" class="form-control" value="@Model.Input.Number5" id="exampleInputPassword1">
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-
-<p>@Model.Result</p>

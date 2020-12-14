@@ -3,41 +3,208 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Сложение двух чисел</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <div class="main-content">
 
-<h2>Исходные данные</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <td>Параметр</td>
-            <td>Значение</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Число 1</td>
-            <td>@Model.Input.Number1</td>
-        </tr>
-        <tr>
-            <td>Число 2</td>
-            <td>@Model.Input.Number2</td>
-        </tr>
-        <tr>
-            <td>Число 3</td>
-            <td>@Model.Input.Number3</td>
-        </tr>
-        <tr>
-            <td>Число 4</td>
-            <td>@Model.Input.Number4</td>
-        </tr>
-        <tr>
-            <td>Число 5</td>
-            <td>@Model.Input.Number5</td>
-        </tr>
-    </tbody>
-</table>
+        <h2>Расчетные данные</h2>
+        <table id="table" class="table table-bordered table-responsive"  style="margin-bottom: 50px">
+            <thead>
+                <tr>
+                    <th>Площадь поперечного сечения аппарата, м2</th>
+                    <th>Расход газа, м3/c</th>
+                    <th>Отношение теплоемкостей потоков</th>
+                    <th>Полная относительная высота слоя </th>
+                    <th>
+                        <img src="~/img/formula.jpg" alt="Alternate Text" class="result-formula" />
+                    </th>
+                </tr>
+            </thead>
 
-<p>@Model.Result</p>
+            <tr>
+                <td class="text-center">
+                    <p>@Model.Result.СrossSectionalArea</p>
+                </td>
+                <td class="text-center">
+                    <p>@Model.Result.GasConsumption</p>
+                </td>
+                <td class="text-center">
+                    <p>@Model.Result.FlowHeatCapacitiesRatio</p>
+                </td>
+                <td class="text-center">
+                    <p>@Model.Result.LayerTotalRelativeHeight</p>
+                </td>
+                <td class="text-center">
+                    <p>@Model.Result.CorrespondingAttitude</p>
+                </td>
+            </tr>
+        </table>
+
+        <h2 class="text-center">Данные для определения зависимостей</h2>
+        <table id="table" class="table table-bordered table-responsive table-result-graphic-data"  style="margin: 0 auto 50px auto">
+            <thead>
+                <tr>
+                    <th>Координаты, Y</th>
+                    <th>Температура материала, *С</th>
+                    <th>Температура газа, *С</th>
+                    <th>Разность температур</th>
+                </tr>
+            </thead>
+
+            @{
+                for (int i = 0; i < Model.Result.Coordinates.Length; i++)
+                {
+                    <tr>
+                        <td class="text-center">
+                            <p>@Model.Result.Coordinates[i]</p>
+                        </td>
+                        <td class="text-center">
+                            <p>@Model.Result.MaterialTemperatures[i]</p>
+                        </td>
+                        <td class="text-center">
+                            <p>@Model.Result.GasTemperatures[i]</p>
+                        </td>
+                        <td class="text-center">
+                            <p>@Model.Result.TemperatureDifferences[i]</p>
+                        </td>
+                    </tr>
+                }
+            }
+
+        </table>
+
+        <h2 class="text-center">Изменение температур материала и газа по высоте слоя</h2>
+        <canvas id="myChart" width="400" height="400" style="margin-bottom: 50px"></canvas>
+        <script>
+            var t = document.querySelector(".table-result-graphic-data");
+            var trs = t.getElementsByTagName("tr");
+            let coordinates = [];
+            let materialTemperatures = [];
+            let gasTemperatures = [];
+
+            for (var i = 1; i < trs.length; i++) {
+                coordinate = trs[i].getElementsByTagName("p")[0];
+                materialTemperature = trs[i].getElementsByTagName("p")[1];
+                gasTemperature = trs[i].getElementsByTagName("p")[2];
+
+                coordinates.push(parseFloat(coordinate.textContent.replace(/[,]+/g, '.')));
+                materialTemperatures.push(parseFloat(materialTemperature.textContent.replace(/[,]+/g, '.')));
+                gasTemperatures.push(parseFloat(gasTemperature.textContent.replace(/[,]+/g, '.')));
+                //console.log(gasTemperatures);
+            }
+
+            //console.log(materialTemperatures);
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: coordinates,
+                    datasets: [{
+                        label: 'Температура материала, t, *C',
+                        data: materialTemperatures,
+                        fill: false,
+                        borderColor: "#325082",
+                    },
+                    {
+                        label: 'Температура газа, T, *C',
+                        data: gasTemperatures,
+                        fill: false,
+                        borderColor: "#b62a8f",
+                    }],
+                },
+                options: {
+                    //title: {
+                    //    display: true,
+                    //    text: 'Изменение температур материала и газа по высоте слоя',
+                    //    fontFamily: "Montserrat-ExtraBold",
+                    //    fontColor: "black"
+                    //},
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Температура, *С'
+                            }
+                        }],
+                        xAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: "Координаты"
+                            }
+                        }]
+                    },
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            fontFamily: 'OpenSans-Regular',
+                        }
+                    }
+                }
+            });
+        </script>
+        
+        <h2 class="text-center">
+            Разность температур материала и газа по высоте слоя
+        </h2>
+        <canvas id="myChart2" width="400" height="400"></canvas>
+        <script>
+            let temperatureDifferences = [];
+
+            for (var i = 1; i < trs.length; i++) {
+                temperatureDifference = trs[i].getElementsByTagName("p")[3];
+                temperatureDifferences.push(parseFloat(temperatureDifference.textContent.replace(/[,]+/g, '.')));
+
+                console.log(temperatureDifferences);
+            }
+
+            var ctx = document.getElementById('myChart2').getContext('2d');
+            var myChart2 = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: coordinates,
+                    datasets: [{
+                        label: 'Разность температур',
+                        data: temperatureDifferences,
+                        fill: false,
+                        borderColor: "#325082",
+                    }],
+                },
+                options: {
+                    //title: {
+                    //    display: true,
+                    //    text: 'Изменение температур материала и газа по высоте слоя',
+                    //    fontFamily: "Montserrat-ExtraBold",
+                    //    fontColor: "black"
+                    //},
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Температура, *С'
+                            }
+                        }],
+                        xAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: "Координаты"
+                            }
+                        }]
+                    },
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            fontFamily: 'OpenSans-Regular',
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
+
+
+

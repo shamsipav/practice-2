@@ -4,7 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using WebApplication.Models;
 using WebApplication.Models.HomeViewModels;
 
@@ -14,6 +16,8 @@ namespace WebApplication.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+        public IndexViewModel viewModel = new IndexViewModel();
+
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -22,21 +26,14 @@ namespace WebApplication.Controllers
         [HttpPost]
         public IActionResult Index(InputDataModel input)
         {
-            int result = input.Number1 + input.Number2 + input.Number3 + input.Number4 + input.Number5;
+            viewModel.CalculateResult(input);
 
-            var viewModel = new IndexViewModel
-            {
-                Result = result,
-                Input = input
-            };
-
-            //return View("Result", viewModel);
-            return View(viewModel);
+            return View("Result", viewModel);
         }
 
         public IActionResult Index()
         {
-            return View(new IndexViewModel());
+            return View(viewModel);
         }
 
         public IActionResult Privacy()
